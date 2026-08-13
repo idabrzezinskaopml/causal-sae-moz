@@ -7,6 +7,8 @@ library(CausalSAE)
 library(sf)
 library(haven)
 library(grf)
+library(tidyr)
+library(ggplot2)
 
 # Load population and sample data
 sample_data <- readRDS("./output/sample_data_cov.rds")
@@ -118,6 +120,43 @@ district_ate <- sample_data %>%
     .groups = "drop"
   )
 
+# Map the naive IPW estimator
+ipw_plot_data <- district_ate %>%
+  select(IPW_ATE, WIPW_ATE) %>%
+  pivot_longer(
+    cols = everything(),
+    names_to = "Method",
+    values_to = "ATE"
+  ) %>%
+  mutate(
+    Method = recode(
+      Method,
+      IPW_ATE = "Naive IPW",
+      WIPW_ATE = "Survey-weighted naive IPW"
+    ),
+    District = rep(seq_len(nrow(district_ate)), 2)
+  )
+
+naive_plot <- ggplot(ipw_plot_data,
+       aes(x = District, y = ATE, colour = Method)) +
+  geom_point(
+    position = position_dodge(width = 0.4),
+    size = 3
+  ) +
+  geom_hline(
+    yintercept = 0,
+    linetype = "dotted",
+    colour = "black"
+  ) +
+  labs(
+    x = "District",
+    y = "ATE",
+    colour = "Method"
+  ) +
+  theme_classic()
+
+ggsave(naive_plot,
+       filename = "./plots/naive_ATE.png")
 
 
 ## Example ###
