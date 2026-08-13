@@ -1,5 +1,5 @@
 # Causal SAE - Floods and Poverty in Mozambique
-This repo applies the Causal Small Area Estimation approach from the [causalSAE](https://github.com/KatarzynaReluga/causalSAE) package to study the causal effects of the 2022 cyclonic season flooding on household consumption and poverty in Mozambique
+This repo applies the Causal Small Area Estimation approach from the [causalSAE](https://github.com/KatarzynaReluga/causalSAE) package to study the causal effects of the 2022 cyclonic season flooding on area-level household consumption and poverty in Mozambique
 
 ## **Data** 
 1. **Household survey**: 2022 Mozambican Household Budget Survey, known as Inquéritos sobre Orçamento Familiar (IOF)
